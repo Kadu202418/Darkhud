@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Gerar Key</title>
+    <style>
+        /* Estilo geral */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Container principal */
+        .container {
+            background-color: #1e1e1e;
+            padding: 40px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+            border: 4px solid #8B0000; /* Red escuro */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        /* Título */
+        .container h2 {
+            font-size: 40px;
+            color: #FF0000; /* Red vibrante */
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Caixa de Key */
+        .key-box {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 22px;
+            color: white;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .key-box span {
+            color: #FF0000; /* Red vibrante */
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Botão gerar key */
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            background-color: #FF0000; /* Red vibrante */
+            border: none;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:hover {
+            background-color: #B22222; /* Vermelho mais escuro */
+            transform: translateY(-5px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        /* Estilo do link */
+        .link {
+            margin-top: 20px;
+            color: #FF0000;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .link:hover {
+            color: #B22222;
+        }
+
+        /* Botão copiar */
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #555;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .copy-btn:hover {
+            background-color: #8B0000; /* Vermelho escuro */
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container principal -->
+    <div class="container">
+        <h2>Gerar sua Key</h2>
+
+        <!-- Caixa da Key gerada -->
+        <div class="key-box">
+            <span id="key">XXXXX-XXXXX-XXXXX-XXXXX</span>
+            <button class="copy-btn" onclick="copyKey()">Copiar</button>
+        </div>
+
+        <!-- Botão gerar key -->
+        <button class="btn" onclick="generateKey()">Gerar Nova Key</button>
+
+        <!-- Link para discord -->
+        <p class="link">Precisa de ajuda? Acesse nosso <a href="https://discord.gg" target="_blank">Discord</a></p>
+    </div>
+
+    <script>
+        function generateKey() {
+            // Gerar chave aleatória
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let generatedKey = '';
+            for (let i = 0; i < 4; i++) {
+                let part = '';
+                for (let j = 0; j < 5; j++) {
+                    part += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                if (i < 3) generatedKey += part + '-';
+                else generatedKey += part;
+            }
+
+            // Exibir chave gerada
+            document.getElementById('key').textContent = generatedKey;
+        }
+
+        function copyKey() {
+            const key = document.getElementById('key').textContent;
+            navigator.clipboard.writeText(key).then(function() {
+                alert('Chave copiada: ' + key); // Avisar que foi copiado
+            }).catch(function(err) {
+                alert('Erro ao copiar a chave: ' + err);
+            });
+        }
+    </script>
+
+</body>
+</html>
