@@ -81,10 +81,15 @@
     
     <script>
         function toggleForm() {
-            document.getElementById('loginBox').style.display =
-                document.getElementById('loginBox').style.display === 'none' ? 'block' : 'none';
-            document.getElementById('registerBox').style.display =
-                document.getElementById('registerBox').style.display === 'none' ? 'block' : 'none';
+            const loginBox = document.getElementById('loginBox');
+            const registerBox = document.getElementById('registerBox');
+            if (loginBox.style.display === 'none') {
+                loginBox.style.display = 'block';
+                registerBox.style.display = 'none';
+            } else {
+                loginBox.style.display = 'none';
+                registerBox.style.display = 'block';
+            }
         }
         
         function register() {
@@ -102,7 +107,7 @@
         function login() {
             let user = document.getElementById('username').value;
             let pass = document.getElementById('password').value;
-            if (user === 'admin' && pass === 'Nertola patriota') {
+            if (user === 'Kadu' && pass === 'Rhicardo@24') {
                 alert('Login de administrador bem-sucedido!');
                 window.location.href = 'admin.html';
             } else if (localStorage.getItem(user) === pass) {
