@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/gerakey.css">
+    <link rel="shortcut icon" href="../Favicon/favicon.ico" type="image/x-icon">
+    <title>Gerar Key</title>
+</head>
+<body>
+
+<div class="container" id="container">
+    <h2>Gerar Key com Expiração</h2>
+    <label for="expiration">Escolha o tempo de expiração:</label>
+    <select id="expiration">
+        <option value="6">6 horas</option>
+        <option value="24">1 dia</option>
+        <option value="720">1 mês (30 dias)</option>
+        <option value="8760">1 ano (365 dias)</option>
+    </select>
+    
+    <!-- Exibição da chave gerada -->
+    <p id="keyOutput">XXXXX-XXXXX-XXXXX-XXXXX</p>
+    
+    <!-- Botão para gerar a chave -->
+    <button class="btn" onclick="generateKey()">Gerar Key</button>
+    
+    <!-- Botão para copiar a chave -->
+    <button id="copyButton" onclick="copyKey()" style="display:none;">Copiar Chave</button>
+</div>
+
+<script>
+    let generatedKey = '';
+
+    // Função para gerar chave
+    function generateKey() {
+        const expirationTime = parseInt(document.getElementById("expiration").value);
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + expirationTime);
+
+        const key = 'KEY-' + Math.random().toString(36).substr(2, 9).toUpperCase() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        const keyWithExpiration = key + `-EXP:${expirationDate.toISOString()}`;
+
+        document.getElementById('keyOutput').textContent = `Chave gerada: ${keyWithExpiration}`;
+        generatedKey = keyWithExpiration;
+
+        document.getElementById('copyButton').style.display = 'block';
+
+        alert(`Chave gerada com sucesso! Expira em: ${expirationDate}`);
+    }
+
+    // Função para copiar a chave
+    function copyKey() {
+        const textarea = document.createElement('textarea');
+        textarea.value = generatedKey;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        alert('Chave copiada para a área de transferência!');
+    }
+</script>
+
+</body>
+</html>

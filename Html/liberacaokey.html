@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/inserikey.css">
+    <link rel="shortcut icon" href="../Favicon/favicon.ico" type="image/x-icon">
+    <title>Inserir Key</title>
+    
+</head>
+<body>
+
+    <!-- Container principal -->
+    <div class="container">
+        <h2>Inserir sua Key</h2>
+
+        <!-- Caixa para inserir a key -->
+        <input type="text" class="key-input" id="keyInput" placeholder="Insira sua chave aqui">
+
+        <!-- Botão submeter -->
+        <button class="btn-submit" onclick="submitKey()">Submeter Key</button>
+
+        <!-- Link para discord -->
+        <p class="link">Precisa de ajuda? Acesse nosso <a href="https://discord.gg" target="_blank">Discord</a></p>
+    </div>
+
+    <script>
+        function submitKey() {
+            var key = document.getElementById('keyInput').value;
+            if (key) {
+                // Aqui você pode adicionar a lógica para verificar a chave ou realizar alguma ação
+                alert('Key inserida: ' + key);
+            } else {
+                alert('Por favor, insira uma chave.');
+            }
+        }
+    </script>
+
+</body>
+</html>

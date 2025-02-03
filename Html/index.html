@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="shortcut icon" href="../Favicon/favicon.ico" type="image/x-icon">
+    <title>DarkHud</title>
+</head>
+<body>
+    <div class="container" id="loginBox" onmouseover="animateBox(this)" onmouseout="resetBox(this)">
+        <h2>LOGIN</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Senha">
+        <button class="btn" onclick="login()">Entrar</button>
+        <p>Não tem uma conta? <a href="#" onclick="toggleForm()">Registre-se aqui</a></p>
+    </div>
+    
+    <div class="container" id="registerBox" style="display: none;" onmouseover="animateBox(this)" onmouseout="resetBox(this)">
+        <h2>REGISTRO</h2>
+        <input type="text" id="newUsername" placeholder="Escolha um username">
+        <input type="password" id="newPassword" placeholder="Escolha uma senha">
+        <button class="btn" onclick="register()">Registrar</button>
+        <p>Já tem uma conta? <a href="#" onclick="toggleForm()">Faça login aqui</a></p>
+    </div>
+    
+    <script>
+        function toggleForm() {
+            const loginBox = document.getElementById('loginBox');
+            const registerBox = document.getElementById('registerBox');
+            if (loginBox.style.display === 'none') {
+                loginBox.style.display = 'block';
+                registerBox.style.display = 'none';
+            } else {
+                loginBox.style.display = 'none';
+                registerBox.style.display = 'block';
+            }
+        }
+        
+        function register() {
+            let user = document.getElementById('newUsername').value;
+            let pass = document.getElementById('newPassword').value;
+            if (user && pass) {
+                localStorage.setItem(user, pass);
+                alert('Conta criada com sucesso!');
+                toggleForm();
+            } else {
+                alert('Preencha todos os campos!');
+            }
+        }
+        
+        function login() {
+            let user = document.getElementById('username').value;
+            let pass = document.getElementById('password').value;
+            if (user === 'Kadu' && pass === 'Rhicardo@24') {
+                alert('Login de administrador bem-sucedido!');
+                window.location.href = 'admin.html';
+            } else if (localStorage.getItem(user) === pass) {
+                alert('Login bem-sucedido!');
+                window.location.href = 'home.html';
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
+        }
+        
+        function animateBox(element) {
+            element.style.transform = 'scale(1.05)';
+        }
+        
+        function resetBox(element) {
+            element.style.transform = 'scale(1)';
+        }
+    </script>
+</body>
+</html>
