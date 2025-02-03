@@ -3,186 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>Gerar Key</title>
     <style>
-        /* Estilo geral */
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: white;
+            text-align: center;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #121212;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            justify-content: center;
-            overflow-x: hidden;
-        }
-
-        /* Container principal */
         .container {
-            background-color: #1e1e1e;
-            padding: 40px;
-            border-radius: 15px;
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
-            border: 4px solid #8B0000; /* Red escuro */
+            background: #222;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            width: 400px;
+            margin: 100px auto;
             transition: transform 0.3s ease-in-out;
         }
-
         .container:hover {
-            transform: scale(1.05);
+            transform: scale(1.05); /* Aumenta o tamanho do container */
         }
-
-        /* Título */
-        .container h2 {
-            font-size: 40px;
-            color: #FF0000; /* Red vibrante */
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        h2 {
+            color: red;
         }
-
-        /* Caixa de Key */
-        .key-box {
-            background-color: #333;
-            border-radius: 10px;
-            padding: 20px;
-            font-size: 22px;
+        .btn, #copyButton {
+            background: red;
             color: white;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .key-box span {
-            color: #FF0000; /* Red vibrante */
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        /* Botão gerar key */
-        .btn {
-            padding: 15px 40px;
-            font-size: 18px;
-            background-color: #FF0000; /* Red vibrante */
+            padding: 10px;
             border: none;
-            color: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-            margin-top: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn:hover {
-            background-color: #B22222; /* Vermelho mais escuro */
-            transform: translateY(-5px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:focus {
-            outline: none;
-        }
-
-        /* Estilo do link */
-        .link {
-            margin-top: 20px;
-            color: #FF0000;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        .link:hover {
-            color: #B22222;
-        }
-
-        /* Botão copiar */
-        .copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #555;
-            color: white;
-            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            margin-top: 10px;
+            width: 100%;
+            transition: transform 0.2s ease-in-out;
         }
-
-        .copy-btn:hover {
-            background-color: #8B0000; /* Vermelho escuro */
+        .btn:hover, #copyButton:hover {
+            background: darkred;
+            transform: scale(1.1); /* Aumenta o botão ao passar o mouse */
         }
-
-        /* Responsividade */
-        @media (max-width: 600px) {
-            .container {
-                width: 90%;
-            }
+        select, label {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: 1px solid red;
+            border-radius: 5px;
+            transition: transform 0.2s ease-in-out;
+        }
+        select:hover, label:hover {
+            transform: scale(1.05); /* Aumenta a área do select e do label */
+        }
+        #keyOutput {
+            margin-top: 20px;
+            font-size: 18px;
+            font-family: "Courier New", Courier, monospace;
+            color: #f0f0f0;
+            transition: transform 0.2s ease-in-out;
+        }
+        #keyOutput:hover {
+            transform: scale(1.05); /* Aumenta a área da chave gerada */
         }
     </style>
 </head>
 <body>
 
-    <!-- Container principal -->
-    <div class="container">
-        <h2>Gerar sua Key</h2>
+<div class="container" id="container">
+    <h2>Gerar Key com Expiração</h2>
+    <label for="expiration">Escolha o tempo de expiração:</label>
+    <select id="expiration">
+        <option value="6">6 horas</option>
+        <option value="24">1 dia</option>
+        <option value="720">1 mês (30 dias)</option>
+        <option value="8760">1 ano (365 dias)</option>
+    </select>
+    
+    <!-- Exibição da chave gerada -->
+    <p id="keyOutput">XXXXX-XXXXX-XXXXX-XXXXX</p>
+    
+    <!-- Botão para gerar a chave -->
+    <button class="btn" onclick="generateKey()">Gerar Key</button>
+    
+    <!-- Botão para copiar a chave -->
+    <button id="copyButton" onclick="copyKey()" style="display:none;">Copiar Chave</button>
+</div>
 
-        <!-- Caixa da Key gerada -->
-        <div class="key-box">
-            <span id="key">XXXXX-XXXXX-XXXXX-XXXXX</span>
-            <button class="copy-btn" onclick="copyKey()">Copiar</button>
-        </div>
+<script>
+    let generatedKey = '';
 
-        <!-- Botão gerar key -->
-        <button class="btn" onclick="generateKey()">Gerar Nova Key</button>
+    // Função para gerar chave
+    function generateKey() {
+        const expirationTime = parseInt(document.getElementById("expiration").value);
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + expirationTime);
 
-        <!-- Link para discord -->
-        <p class="link">Precisa de ajuda? Acesse nosso <a href="https://discord.gg" target="_blank">Discord</a></p>
-    </div>
+        const key = 'KEY-' + Math.random().toString(36).substr(2, 9).toUpperCase() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        const keyWithExpiration = key + `-EXP:${expirationDate.toISOString()}`;
 
-    <script>
-        function generateKey() {
-            // Gerar chave aleatória
-            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let generatedKey = '';
-            for (let i = 0; i < 4; i++) {
-                let part = '';
-                for (let j = 0; j < 5; j++) {
-                    part += characters.charAt(Math.floor(Math.random() * characters.length));
-                }
-                if (i < 3) generatedKey += part + '-';
-                else generatedKey += part;
-            }
+        document.getElementById('keyOutput').textContent = `Chave gerada: ${keyWithExpiration}`;
+        generatedKey = keyWithExpiration;
 
-            // Exibir chave gerada
-            document.getElementById('key').textContent = generatedKey;
-        }
+        document.getElementById('copyButton').style.display = 'block';
 
-        function copyKey() {
-            const key = document.getElementById('key').textContent;
-            navigator.clipboard.writeText(key).then(function() {
-                alert('Chave copiada: ' + key); // Avisar que foi copiado
-            }).catch(function(err) {
-                alert('Erro ao copiar a chave: ' + err);
-            });
-        }
-    </script>
+        alert(`Chave gerada com sucesso! Expira em: ${expirationDate}`);
+    }
+
+    // Função para copiar a chave
+    function copyKey() {
+        const textarea = document.createElement('textarea');
+        textarea.value = generatedKey;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        alert('Chave copiada para a área de transferência!');
+    }
+</script>
 
 </body>
 </html>
